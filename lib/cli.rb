@@ -16,8 +16,18 @@ class CLI
         puts " "
         
         category = gets.chomp
-        stories = NYTInterface.fetch_stories_for_category(category)
-      
+        results = NYTInterface.fetch_stories_for_category(category)
+
+        if results == nil
+          invalid_input
+          run
+        else
+            results.each do |result|
+              Story.new(result["title"], result["byline"], result["abstract"]) #here we interate thru the results using map creating a new hash including our 3 specific attributes. 
+            end
+          end
+
+        stories = Story.all
 
         puts " "
         puts "------------------------"
