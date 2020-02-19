@@ -17,7 +17,6 @@ class CLI
         
         category = gets.chomp
         stories = NYTInterface.fetch_stories_for_category(category)
-        run
       
 
         puts " "
@@ -34,7 +33,7 @@ class CLI
        
         
           selection = gets.chomp.to_i - 1
-          story = stories[selection]bin/
+          story = stories[selection]
         
         puts "------------"
         puts "Loading info"
