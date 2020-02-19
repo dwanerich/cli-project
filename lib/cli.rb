@@ -22,10 +22,10 @@ class CLI
           invalid_input
           run
         else
-            results.each do |result|
-              Story.new(result["title"], result["byline"], result["abstract"]) #here we interate thru the results using map creating a new hash including our 3 specific attributes. 
-            end
+          results.each do |result|
+          Story.new(result["title"], result["byline"], result["abstract"]) #here we interate thru the results using each creating a new hash including our 3 specific attributes. 
           end
+        end
 
         stories = Story.all
 
