@@ -1,6 +1,7 @@
 class Story
 
     @@all = []
+
     attr_accessor :title, :byline, :abstract
 
     def initialize(title, byline, abstract)
@@ -12,6 +13,10 @@ class Story
 
     def self.all
         @@all 
+    end
+
+    def self.clear_all
+        @@all.clear
     end
 
 
