@@ -1,7 +1,8 @@
 class CLI
 
 
-    def run
+
+    def welcome
         puts " "
         puts " "
         puts "---------------------------"
@@ -14,8 +15,10 @@ class CLI
         puts "arts / automobiles / books / business / fashion / food / health"
         puts "movies / politics / realestate / science / sports / technology / travel"
         puts " "
-        
-        category = gets.chomp
+    end
+
+    def get_stories
+      category = gets.chomp
         results = NYTInterface.fetch_stories_for_category(category)
 
         if results == nil
@@ -26,7 +29,9 @@ class CLI
           Story.new(result["title"], result["byline"], result["abstract"]) #here we interate thru the results using each creating a new hash including our 3 specific attributes. 
           end
         end
+      end
 
+      def display_stories
         stories = Story.all
 
         puts " "
@@ -37,13 +42,16 @@ class CLI
         stories.each_with_index do |story, index|
           puts "#{index + 1}. #{story.title}"
         end
-          puts " "
+      end
+
+      def more_story_details
+         puts " "
           puts "which one would you like to learn more about Press 1, 2 or 3?"
           puts " "
        
         
           selection = gets.chomp.to_i - 1
-          story = stories[selection]
+          story = Story.all[selection]
         
         puts "------------"
         puts "Loading info"
@@ -53,6 +61,16 @@ class CLI
         
         print_info(story)
         other_categories
+      end
+
+
+
+    def run
+        welcome
+        get_stories
+        display_stories
+        more_story_details
+        
     end
 
 
@@ -75,46 +93,26 @@ class CLI
         
 
         def other_categories
+           
         
-        puts " "
-        puts "-------------------------------------------------------------------------"
-        puts "What other category from below would you like to see the top stories for?"
-        puts "--------------------------------------------------------------------------"
-        puts " "
-        puts "-----------------------"
-        puts " or to EXIT type exit!"
-        puts "-----------------------"
-        puts " "
-        puts "arts / automobiles / books / business / fashion / food / health"
-        puts "movies / politics / realestate / science / sports / technology / travel"
-        puts " "
-        
-        category = gets.chomp
-        stories = NYTInterface.fetch_stories_for_category(category)
-
-        puts " "
-        puts "-------------------------"
-        puts "Here are the top stories"
-        puts "-------------------------"
-        puts ""
-        stories.each_with_index do |story, index|
-          puts "#{index + 1}. #{story.title}"
+            puts " "
+            puts "-------------------------------------------------------------------------"
+            puts "What other category from below would you like to see the top stories for?"
+            puts "--------------------------------------------------------------------------"
+            puts " "
+            puts "-----------------------"
+            puts " or to EXIT type exit!"
+            puts "-----------------------"
+            puts " "
+            puts "arts / automobiles / books / business / fashion / food / health"
+            puts "movies / politics / realestate / science / sports / technology / travel"
+            puts " "
+            
+            Story.clear_all
+            get_stories
+            display_stories
+            more_story_details
         end
         
-        puts " "
-        puts "which one would you like to learn more about Press 1, 2 or 3?"
-       
-        selection = gets.chomp.to_i - 1
-        story = stories[selection]
-        
-        puts " "
-        puts "-------------"
-        puts "Loading info"
-        puts "-------------"
-        sleep(2)
-        
-        print_info(story)
-        other_categories
-        
-    end
+      
 end
